@@ -1,0 +1,78 @@
+﻿@model Entities.Products
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@(Model.ProductID == 0 ? "Crear Producto" : "Editar Producto")</title>
+    <!-- Enlace a Bootstrap 4.5.2 -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="mb-4 text-center">@(Model.ProductID == 0 ? "Crear Producto" : "Editar Producto")</h1>
+
+        @using (Html.BeginForm("CRUD", "Home", FormMethod.Post))
+        {
+            <div class="form-group">
+                <label>ID:</label>
+                @if (Model.ProductID == 0)
+                {
+                    <input type="text" name="ProductID" class="form-control" />
+                }
+                else
+                {
+                    <p class="form-control-plaintext">@Model.ProductID</p>
+                    <input type="hidden" name="ProductID" value="@Model.ProductID" />
+                }
+            </div>
+
+            <div class="form-group">
+                <label>Nombre:</label>
+                <input type="text" name="ProductName" value="@Model.ProductName" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label>Precio Unitario:</label>
+                <input type="text" name="UnitPrice" value="@Model.UnitPrice" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label>Unidades en Existencia:</label>
+                <input type="text" name="UnitsInStock" value="@Model.UnitsInStock" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label>Categoría:</label>
+                <input type="text" name="CategoryID" value="@Model.CategoryID" class="form-control" />
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <button type="submit" name="CreateBtn" value="Create" class="btn btn-success">Crear</button>
+                <button type="submit" name="UpdateBtn" value="Update" class="btn btn-primary">Actualizar</button>
+                <button type="submit" name="DeleteBtn" value="Delete" class="btn btn-danger">Eliminar</button>
+            </div>
+        }
+
+        <div class="text-center mt-4">
+            <a href="@Url.Action("List", "Home")" class="btn btn-secondary">Listar Todos</a>
+        </div>
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger mt-3">@ViewBag.ErrorMessage</div>
+        }
+
+        @if (ViewBag.SuccessMessage != null)
+        {
+            <div class="alert alert-success mt-3">@ViewBag.SuccessMessage</div>
+        }
+    </div>
+
+    <!-- Scripts de Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

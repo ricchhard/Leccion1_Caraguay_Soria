@@ -1,0 +1,151 @@
+﻿@model Entities.Categories
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@(Model.CategoryID == 0 ? "Crear Categoría" : "Editar Categoría")</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .mt-3 {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>@(Model.CategoryID == 0 ? "Crear Categoría" : "Editar Categoría")</h1>
+
+    @using (Html.BeginForm("CategoryCRUD", "Home", FormMethod.Post))
+    {
+        <div class="form-group">
+            <label for="CategoryID" class="form-label">ID:</label>
+            @if (Model.CategoryID == 0)
+            {
+                <input type="text" name="CategoryID" class="form-control" id="CategoryID" />
+            }
+            else
+            {
+                <span>@Model.CategoryID</span>
+                <input type="hidden" name="CategoryID" value="@Model.CategoryID" />
+            }
+        </div>
+
+        <div class="form-group">
+            <label for="CategoryName" class="form-label">Nombre de Categoría:</label>
+            <input type="text" name="CategoryName" value="@Model.CategoryName" class="form-control" id="CategoryName" />
+        </div>
+
+        <div class="form-group">
+            <label for="Description" class="form-label">Descripción:</label>
+            <input type="text" name="Description" value="@Model.Description" class="form-control" id="Description" />
+        </div>
+
+        <div class="actions">
+            <button type="submit" name="CreateBtn" value="Create" class="btn btn-success">Crear</button>
+            <button type="submit" name="UpdateBtn" value="Update" class="btn btn-primary">Actualizar</button>
+            <button type="submit" name="DeleteBtn" value="Delete" class="btn btn-danger">Eliminar</button>
+        </div>
+
+        <div class="text-center mt-3">
+            <a href="@Url.Action("List", "Home")" class="btn btn-secondary">Listar Todos</a>
+        </div>
+    }
+
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <div class="alert alert-success mt-3">@ViewBag.SuccessMessage</div>
+    }
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger mt-3">@ViewBag.ErrorMessage</div>
+    }
+
+</body>
+</html>

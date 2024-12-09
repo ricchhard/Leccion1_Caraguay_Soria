@@ -1,0 +1,238 @@
+﻿@model Entities.Categories
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@(Model.CategoryID == 0 ? "Crear Categoría" : "Editar Categoría")</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #2d3e50;
+            color: #fff;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+            header h1 {
+                font-size: 2.8em;
+                margin-bottom: 0.5em;
+            }
+
+            header p {
+                font-size: 1.2em;
+                margin-top: 0;
+            }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            transition: transform 0.3s ease;
+        }
+
+            .form-container:hover {
+                transform: scale(1.05);
+            }
+
+            .form-container h1 {
+                text-align: center;
+                font-size: 2em;
+                color: #2d3e50;
+                margin-bottom: 1em;
+            }
+
+        .form-label {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            transition: border 0.3s ease;
+        }
+
+            input[type="text"]:focus {
+                border-color: #3498db;
+            }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 1.1em;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+        }
+
+            .btn-primary:hover {
+                background-color: #2ecc71;
+            }
+
+        .btn-warning {
+            background-color: #f39c12;
+            color: white;
+            border: none;
+        }
+
+            .btn-warning:hover {
+                background-color: #e67e22;
+            }
+
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+        }
+
+            .btn-danger:hover {
+                background-color: #c0392b;
+            }
+
+        .d-flex {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .d-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .mt-3 {
+            margin-top: 30px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .btn-outline-secondary {
+            background-color: transparent;
+            color: #2d3e50;
+            border: 2px solid #2d3e50;
+            padding: 10px 20px;
+            border-radius: 6px;
+        }
+
+            .btn-outline-secondary:hover {
+                background-color: #2d3e50;
+                color: #fff;
+            }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>PRUEBA PRIMER PARCIAL</h1>
+        <p>Aplicaciones Distribuidas</p>
+    </header>
+
+    <div class="container">
+        <div class="form-container">
+            <h1>@(Model.CategoryID == 0 ? "Crear Categoría" : "Editar Categoría")</h1>
+
+            @using (Html.BeginForm("CategoryCRUD", "Home", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+            {
+                <div class="mb-3">
+                    <label for="CategoryID" class="form-label">ID:</label>
+                    @if (Model.CategoryID == 0)
+                    {
+                        <input type="text" name="CategoryID" class="form-control form-control-sm" id="CategoryID" />
+                    }
+                    else
+                    {
+                        <span>@Model.CategoryID</span>
+                        <input type="hidden" name="CategoryID" value="@Model.CategoryID" />
+                    }
+                </div>
+
+                <div class="mb-3">
+                    <label for="CategoryName" class="form-label">Nombre de Categoría:</label>
+                    <input type="text" name="CategoryName" value="@Model.CategoryName" class="form-control form-control-sm" id="CategoryName" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="Description" class="form-label">Descripción:</label>
+                    <input type="text" name="Description" value="@Model.Description" class="form-control form-control-sm" id="Description" />
+                </div>
+
+                <div class="d-flex">
+                    <button type="submit" name="CreateBtn" value="Create" class="btn btn-primary">Crear</button>
+                    <button type="submit" name="UpdateBtn" value="Update" class="btn btn-warning">Actualizar</button>
+                    <button type="submit" name="DeleteBtn" value="Delete" class="btn btn-danger">Eliminar</button>
+                </div>
+            }
+
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert alert-danger mt-3">@ViewBag.ErrorMessage</div>
+            }
+
+            @if (ViewBag.SuccessMessage != null)
+            {
+                <div class="alert alert-success mt-3">@ViewBag.SuccessMessage</div>
+            }
+
+            <div class="text-center mt-3">
+                <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary">INICIO</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
